@@ -1,53 +1,27 @@
-var hypnoticBall, database;
-var position;
 
+var  r = 0;
+var g = 50;
+var b=255;
 
 function setup(){
-  database = firebase.database();
-  console.log(database);
-  createCanvas(500,500);
 
-  hypnoticBall = createSprite(250,250,10,10);
-  hypnoticBall.shapeColor = "red";
+  createCanvas(1200,400);
 
-
-  var hypnoticBallPosition = database.ref('ball/position');
-  hypnoticBallPosition.on("value", readPosition, showError);
 }
+
 
 function draw(){
-  background("white");
-  
-    if(keyDown(LEFT_ARROW)){
-      writePosition(-1,0);
-    }
-    else if(keyDown(RIGHT_ARROW)){
-      writePosition(1,0);
-    }
-    else if(keyDown(UP_ARROW)){
-      writePosition(0,-1);
-    }
-    else if(keyDown(DOWN_ARROW)){
-      writePosition(0,+1);
-    }
-    drawSprites();
-  
-}
-
-function writePosition(x,y){
-  database.ref('ball/position').set({
-    'x': position.x + x ,
-    'y': position.y + y
-  })
-}
-
-function readPosition(data){
-  position = data.val();
-  console.log(position.x);
-  hypnoticBall.x = position.x;
-  hypnoticBall.y = position.y;
-}
-
-function showError(){
-  console.log("Error in writing to the database");
+  r=map(mouseX,0,1200,0,255);
+  g =map(mouseX,50,900,50,100);
+  b= map(mouseX,0,1200,255,0);
+  background(r,g,b);
+  colorMode(HSB, height, height, height);
+  fill(mouseY, height, height);
+  ellipse(mouseX,mouseY,150,150);
+  fill(mouseX, height, height);
+  ellipse(mouseX,mouseY,100,100);
+  fill(255);
+  ellipse(mouseX,mouseY,30,0);
+ fill(mouseY, height, height);
+  ellipse(mouseX,mouseY,30,30);
 }
